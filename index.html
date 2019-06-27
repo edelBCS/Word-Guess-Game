@@ -8,6 +8,7 @@
     <title>Word Guess Game</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 
@@ -23,20 +24,27 @@
         <!-- </div> -->
 
         <!-- Score Keeping  -->
-        <div class="row">
+        <div id="score" class="score">
             <h2 class="col-12 h2 text-center">Scoreboard</h2>
+            <p>WINS: 0</p>
+            <p>LOSSES: 0</p>
+            <button class="btn btn-danger">New Game</button>
         </div>
 
         <!-- Word to be Guessed -->
-        <div class="row">
+        <div id="mysteryWord" class="mysteryWord">
             <h2 class="h2">Mystery Word</h2>
+            <p>_ _ _ _ _</p>
         </div>
 
         <!-- Letters Already Guessed -->
-        <div class="row">
+        <div id="usedLetters" class="usedLetters">
             <h2 class="h2">Letters Already Guessed</h2>
+            <p>No used letters!!!</p>
         </div>
     </div>
+
+    <script src="assets/javascript/game.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
