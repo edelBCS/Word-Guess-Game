@@ -14,33 +14,34 @@
 
 <body>
 
-    <div class="container">
+    <div class="container text-center">
         <!-- Title Banner -->
-        <!-- <div class="row"> -->
         <div class="jumbotron">
             <h1 class="display-4 text-center">Word Guess Game</h1>
             <p class="lead text-center">Guess the word or you LOSE!!!</p>
         </div>
-        <!-- </div> -->
 
         <!-- Score Keeping  -->
-        <div id="score" class="score">
-            <h2 class="col-12 h2 text-center">Scoreboard</h2>
-            <p>WINS: 0</p>
-            <p>LOSSES: 0</p>
-            <button class="btn btn-danger">New Game</button>
+        <div id="wins" class="wins">
+            WINS: 0
+        </div>
+
+        <div id="losses" class="losses">
+            LOSSES: 0
         </div>
 
         <!-- Word to be Guessed -->
         <div id="mysteryWord" class="mysteryWord">
             <h2 class="h2">Mystery Word</h2>
-            <p>_ _ _ _ _</p>
         </div>
 
         <!-- Letters Already Guessed -->
         <div id="usedLetters" class="usedLetters">
             <h2 class="h2">Letters Already Guessed</h2>
-            <p>No used letters!!!</p>
+        </div>
+
+        <div id="newGameBtn" class="newGameBtn">
+            <button class="btn btn-danger">New Game</button>
         </div>
     </div>
 
