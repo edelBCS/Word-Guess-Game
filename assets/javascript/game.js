@@ -28,7 +28,8 @@ invisibleWord.textContent = hiddenWord;
 document.onkeyup = function(e){
     var userGuess = e.key;
     var usedLetters = document.getElementById("usedLetters");
-    (mysteryWord.indexOf(e.key) >= 0) ? (invisibleWord.textContent = unhideLetter(hiddenWord, e.key)) : (usedLetters.textContent = usedLetters.textContent + e.key + " ");
+    (mysteryWord.indexOf(e.key) >= 0) ? (hiddenWord = unhideLetter(hiddenWord, e.key)) : (usedLetters.textContent = usedLetters.textContent + e.key + " ");
+    invisibleWord.textContent = hiddenWord;
 
 }
 
@@ -45,5 +46,7 @@ function unhideLetter(hiddenWord, letter){
         hiddenWord = tempStr;
         console.log(hiddenWord, tempStr);
     }
+    
+    console.log(hiddenWord);
     return  hiddenWord;
 }
