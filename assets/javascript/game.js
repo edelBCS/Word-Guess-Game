@@ -78,9 +78,12 @@ function setupNewGame(){
     //Displays the word as blanks spaces
     invisibleWord.textContent = hiddenWord;
 
-    //set the number of guesses the player has left
+    //set the number of guesses
     guesses = mysteryWord.length + 2;
     updateGuesses();
+    
+    //resets mysteryWord back to black
+    document.getElementById("mysteryWord").style = "color: black";
 }
 
 //updates the remaining guesses
@@ -112,6 +115,7 @@ function checkWin(hiddenWord){
     if (result === true){
         ++wins;    
         document.getElementById("wins").textContent = "WINS: " + wins;
+        document.getElementById("mysteryWord").style = "color: green";
     }
     return result;
 }
@@ -121,6 +125,8 @@ function checkLose(g){
     if(result === true) {
         ++losses;
         document.getElementById("losses").textContent = "LOSSES: " + losses;
+        document.getElementById("mysteryWord").textContent = mysteryWord;
+        document.getElementById("mysteryWord").style = "color: red";
     }
     return result;
 }
