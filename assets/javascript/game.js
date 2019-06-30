@@ -19,47 +19,68 @@ const words = [
 //You haven't won yet
 var result = false;
 var guesses = 0;
+var mysteryWord;
+var invisibleWord;
+var hiddenWord;
+var wins = 0;
+var losses = 0;
 
-// Picks a mystery word from the array
-var mysteryWord = words[Math.floor(Math.random() * words.length)];
-console.log(mysteryWord);
-
-// Get the 'mysteryWord' element and hides the word
-var invisibleWord = document.getElementById("mysteryWord");
-var hiddenWord = hideWord(mysteryWord);
-
-//Displays the word as blanks spaces
-invisibleWord.textContent = hiddenWord;
-
-//set the number of guesses the player has left
-guesses = mysteryWord.length + 2;
-updateGuesses();
+setupNewGame();
 
 //when key is pressed
 document.onkeyup = function(e){
     var userGuess = e.key;
-    var usedLetters = document.getElementById("usedLetters");
+    var usedLetters = document.getElementById("usedLetters").textContent;
 
-    //if correct guess display else add to used letters pile
-    console.log(usedLetters.textContent.indexOf(e.key.toLowerCase()));
-    if (mysteryWord.indexOf(e.key) >= 0 && (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0)) {
-        hiddenWord = unhideLetter(hiddenWord, e.key);
-        usedLetters.textContent = usedLetters.textContent + e.key;
-    } else if (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0){
-        usedLetters.textContent = usedLetters.textContent + e.key;
+    // Checks to see if game is still live
+    if (guesses > 0) {
+        // determins if keyup event was a letter
+        if (e.which >= 65 && e.which <=90){
+            //if correct guess display on screen then add letter to user letters
+            if (mysteryWord.indexOf(e.key) >= 0 && (usedLetters.indexOf(e.key.toLowerCase()) < 0)) {
+                hiddenWord = unhideLetter(hiddenWord, e.key);
+                usedLetters = usedLetters + e.key;
+            } else if (usedLetters.indexOf(e.key.toLowerCase()) < 0){
+                usedLetters = usedLetters + e.key;
+            }
+
+            //displays new mystery word with correct guess
+            invisibleWord.textContent = hiddenWord;
+
+            //decrement guesses
+            guesses = guesses - 1;            
+            updateGuesses();
+            
+            //check for win condition
+            result = checkWin(hiddenWord);
+            (result === true)?(alert("YOU WIN!")) : "";
+
+            //check for lose condition
+            result = checkLose(guesses);
+            (result === true)?(alert("YOU LOSE!")) : "";
+
+        } else {
+            alert("Please Choose a Letter");
+        }
     }
-    //displays new mystery word with correct guess
-    invisibleWord.textContent = hiddenWord;
-    guesses = guesses - 1;
-    
-    updateGuesses();
-    
-    result = checkWin(hiddenWord);
-    (result === true)?(alert("YOU WIN!")) : "";
+}
 
-    result = checkLose(guesses);
-    (result === true)?(alert("YOU LOSE!")) : "";
-    return;
+// Sets perameters for a New Game
+function setupNewGame(){
+    // Picks a mystery word from the array
+    mysteryWord = words[Math.floor(Math.random() * words.length)];
+    console.log(mysteryWord);
+
+    // Get the 'mysteryWord' element and hides the word
+    invisibleWord = document.getElementById("mysteryWord");
+    hiddenWord = hideWord(mysteryWord);
+
+    //Displays the word as blanks spaces
+    invisibleWord.textContent = hiddenWord;
+
+    //set the number of guesses the player has left
+    guesses = mysteryWord.length + 2;
+    updateGuesses();
 }
 
 //updates the remaining guesses
@@ -76,26 +97,30 @@ function hideWord(word){
 }
 
 //checks if letter is in word, reveals it if correct
-function unhideLetter(hiddenWord, letter){
-    
+function unhideLetter(hiddenWord, letter){    
     for(var i = 0; i<mysteryWord.length; ++i){
         var tempStr = (mysteryWord[i] === letter) ? hiddenWord.substring(0, i) + letter + hiddenWord.substring(i + 1) : hiddenWord;
         hiddenWord = tempStr;
-        console.log(hiddenWord, tempStr);
     }
     
-    console.log(hiddenWord);
     return  hiddenWord;
 }
 
 //checks to see if user won
 function checkWin(hiddenWord){
     var result = (hiddenWord.indexOf("_") >= 0) ? false : true;
-    
+    if (result === true){
+        ++wins;    
+        document.getElementById("wins").textContent = "WINS: " + wins;
+    }
     return result;
 }
 
 function checkLose(g){
     var result = (g === 0)?true:false;
+    if(result === true) {
+        ++losses;
+        document.getElementById("losses").textContent = "LOSSES: " + losses;
+    }
     return result;
 }

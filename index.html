@@ -26,13 +26,18 @@
             WINS: 0
         </div>
 
+        <div id="losses" class="losses">
+            LOSSES: 0
+        </div>
+
+        <!-- Remaining Guesses -->
         <div id="guesses" class="guesses">
 
         </div>
 
         <!-- Word to be Guessed -->
-        <div id="mysteryWord" class="mysteryWord">
-            <h2 class="h2">Mystery Word</h2>
+        <div id="mysteryWord" class="mysteryWord h2" style="letter-spacing: 3px">
+            
         </div>
 
         <!-- Letters Already Guessed -->
@@ -43,7 +48,7 @@
 
         <!-- Start and new game -->
         <div id="newGameBtn" class="newGameBtn">
-            <button class="btn btn-danger">New Game</button>
+            <button class="btn btn-danger" onclick="setupNewGame()">New Game</button>
         </div>
     </div>
 
