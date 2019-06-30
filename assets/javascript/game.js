@@ -13,7 +13,14 @@ const words = [
     "corpse",
     "apocalypse",
     "reanimate",
-    "infection"
+    "infection",
+    "rotting",
+    "flesh",
+    "virus",
+    "outbrake",
+    "bite",
+    "resurrect",
+    "dead"
 ]
 
 //You haven't won yet
