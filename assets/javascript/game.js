@@ -37,38 +37,41 @@ setupNewGame();
 //when key is pressed
 document.onkeyup = function(e){
     var userGuess = e.key;
-    var usedLetters = document.getElementById("usedLetters").textContent;
+    var usedLetters = document.getElementById("usedLetters");
 
     // Checks to see if game is still live
     if (guesses > 0) {
         // determins if keyup event was a letter
         if (e.which >= 65 && e.which <=90){
             //if correct guess display on screen then add letter to user letters
-            if (mysteryWord.indexOf(e.key) >= 0 && (usedLetters.indexOf(e.key.toLowerCase()) < 0)) {
+            if (mysteryWord.indexOf(e.key) >= 0 && (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0)) {
                 hiddenWord = unhideLetter(hiddenWord, e.key);
-                usedLetters = usedLetters + e.key;
-            } else if (usedLetters.indexOf(e.key.toLowerCase()) < 0){
-                usedLetters = usedLetters + e.key;
+                usedLetters.textContent = usedLetters.textContent + e.key;
+            } else if (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0){
+                usedLetters.textContent = usedLetters.textContent + e.key;
+                //decrement guesses if wrong
+                guesses = guesses - 1;            
+                updateGuesses();
             }
 
             //displays new mystery word with correct guess
             invisibleWord.textContent = hiddenWord;
 
-            //decrement guesses
-            guesses = guesses - 1;            
-            updateGuesses();
             
-            //check for win condition
-            result = checkWin(hiddenWord);
-            (result === true)?(alert("YOU WIN!")) : "";
-
-            //check for lose condition
-            result = checkLose(guesses);
-            (result === true)?(alert("YOU LOSE!")) : "";
+            
+            
 
         } else {
             alert("Please Choose a Letter");
         }
+
+        //check for win condition
+        result = checkWin(hiddenWord);
+        (result === true)?(alert("YOU WIN!")) : "";
+
+        //check for lose condition
+        result = checkLose(guesses);
+        (result === true)?(alert("YOU LOSE!")) : "";
     }
 }
 
@@ -88,6 +91,10 @@ function setupNewGame(){
     //set the number of guesses
     guesses = mysteryWord.length + 2;
     updateGuesses();
+
+    //clears guessed letters
+    var usedLetters = document.getElementById("usedLetters");
+    usedLetters.textContent = "";
     
     //resets mysteryWord back to black
     document.getElementById("mysteryWord").style = "color: black";
