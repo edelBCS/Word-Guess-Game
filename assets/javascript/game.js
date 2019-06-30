@@ -18,6 +18,7 @@ const words = [
 
 //You haven't won yet
 var result = false;
+var guesses = 0;
 
 // Picks a mystery word from the array
 var mysteryWord = words[Math.floor(Math.random() * words.length)];
@@ -26,8 +27,13 @@ console.log(mysteryWord);
 // Get the 'mysteryWord' element and hides the word
 var invisibleWord = document.getElementById("mysteryWord");
 var hiddenWord = hideWord(mysteryWord);
+
 //Displays the word as blanks spaces
 invisibleWord.textContent = hiddenWord;
+
+//set the number of guesses the player has left
+guesses = mysteryWord.length + 2;
+updateGuesses();
 
 //when key is pressed
 document.onkeyup = function(e){
@@ -35,15 +41,31 @@ document.onkeyup = function(e){
     var usedLetters = document.getElementById("usedLetters");
 
     //if correct guess display else add to used letters pile
-    (mysteryWord.indexOf(e.key) >= 0) ? (hiddenWord = unhideLetter(hiddenWord, e.key)) : (usedLetters.textContent = usedLetters.textContent + e.key + " ");
+    console.log(usedLetters.textContent.indexOf(e.key.toLowerCase()));
+    if (mysteryWord.indexOf(e.key) >= 0 && (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0)) {
+        hiddenWord = unhideLetter(hiddenWord, e.key);
+        usedLetters.textContent = usedLetters.textContent + e.key;
+    } else if (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0){
+        usedLetters.textContent = usedLetters.textContent + e.key;
+    }
     //displays new mystery word with correct guess
     invisibleWord.textContent = hiddenWord;
-
+    guesses = guesses - 1;
+    
+    updateGuesses();
     
     result = checkWin(hiddenWord);
-    console.log("did you win: " + result);
     (result === true)?(alert("YOU WIN!")) : "";
+
+    result = checkLose(guesses);
+    (result === true)?(alert("YOU LOSE!")) : "";
     return;
+}
+
+//updates the remaining guesses
+function updateGuesses(){
+    var guessesID = document.getElementById("guesses");
+    guessesID.textContent =  "Remaining Guesses: "+ (guesses);
 }
 
 //masks the word as underscores
@@ -70,5 +92,10 @@ function unhideLetter(hiddenWord, letter){
 function checkWin(hiddenWord){
     var result = (hiddenWord.indexOf("_") >= 0) ? false : true;
     
+    return result;
+}
+
+function checkLose(g){
+    var result = (g === 0)?true:false;
     return result;
 }
