@@ -56,22 +56,18 @@ document.onkeyup = function(e){
 
             //displays new mystery word with correct guess
             invisibleWord.textContent = hiddenWord;
+            
+            //check for win condition
+            result = checkWin(hiddenWord);
+            (result === true)?(alert("YOU WIN!")) : "";
 
-            
-            
-            
+            //check for lose condition
+            result = checkLose(guesses);
+            (result === true)?(alert("YOU LOSE!")) : "";
 
         } else {
             alert("Please Choose a Letter");
         }
-
-        //check for win condition
-        result = checkWin(hiddenWord);
-        (result === true)?(alert("YOU WIN!")) : "";
-
-        //check for lose condition
-        result = checkLose(guesses);
-        (result === true)?(alert("YOU LOSE!")) : "";
     }
 }
 
