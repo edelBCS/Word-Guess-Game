@@ -94,12 +94,17 @@ function setupNewGame(){
     
     //resets mysteryWord back to black
     document.getElementById("mysteryWord").style = "color: black";
+
+    //Set WINS/LOSSES
+    document.getElementById("wins").textContent = 0;
+    document.getElementById("losses").textContent = 0;
+    
 }
 
 //updates the remaining guesses
 function updateGuesses(){
     var guessesID = document.getElementById("guesses");
-    guessesID.textContent =  "Remaining Guesses: "+ (guesses);
+    guessesID.textContent =  guesses;
 }
 
 //masks the word as underscores

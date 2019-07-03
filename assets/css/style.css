@@ -25,6 +25,7 @@
 }
 
 #mysteryWord {
-    color: gray;
-    
+    color: gray!important;
+    letter-spacing: 10px;
+    font-size: 50px;
 }
