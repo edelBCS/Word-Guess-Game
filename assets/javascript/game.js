@@ -32,13 +32,17 @@ var hiddenWord;
 var wins = 0;
 var losses = 0;
 
+//Set WINS/LOSSES
+document.getElementById("wins").textContent = 0;
+document.getElementById("losses").textContent = 0;
+
 setupNewGame();
 
 //when key is pressed
 document.onkeyup = function(e){
     var userGuess = e.key;
     var usedLetters = document.getElementById("usedLetters");
-
+    
     // Checks to see if game is still live
     if (guesses > 0) {
         // determins if keyup event was a letter
@@ -93,10 +97,6 @@ function setupNewGame(){
     
     //resets mysteryWord back to black
     document.getElementById("mysteryWord").style = "color: black";
-
-    //Set WINS/LOSSES
-    document.getElementById("wins").textContent = 0;
-    document.getElementById("losses").textContent = 0;
     
 }
 
