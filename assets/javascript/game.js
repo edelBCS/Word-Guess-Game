@@ -31,6 +31,7 @@ var invisibleWord;
 var hiddenWord;
 var wins = 0;
 var losses = 0;
+var gameOver = true;
 
 //Set WINS/LOSSES
 document.getElementById("wins").textContent = 0;
@@ -44,7 +45,7 @@ document.onkeyup = function(e){
     var usedLetters = document.getElementById("usedLetters");
     
     // Checks to see if game is still live
-    if (guesses > 0) {
+    if (!gameOver) {
         // determins if keyup event was a letter
         if (e.which >= 65 && e.which <=90){
             //if correct guess display on screen then add letter to user letters
@@ -62,11 +63,12 @@ document.onkeyup = function(e){
             
             //check for win condition
             result = checkWin(hiddenWord);
-            (result === true)?(alert("YOU WIN!")) : "";
+            //Timeout is set to prevent alert from firing before page is repainted
+            (result === true)?(setTimeout(function(){alert("YOU WIN!");},10)) : "";
 
             //check for lose condition
             result = checkLose(guesses);
-            (result === true)?(alert("YOU LOSE!")) : "";
+            (result === true)?(setTimeout(function(){alert("YOU LOSE!");},10)) : "";
 
         } else {
             alert("Please Choose a Letter");
@@ -80,30 +82,31 @@ function setupNewGame(){
     mysteryWord = words[Math.floor(Math.random() * words.length)];
     console.log(mysteryWord);
 
-    // Get the 'mysteryWord' element and hides the word
-    invisibleWord = document.getElementById("mysteryWord");
+    // Hides the work then displays it
     hiddenWord = hideWord(mysteryWord);
 
     //Displays the word as blanks spaces
-    invisibleWord.textContent = hiddenWord;
+    invisibleWord = $("#mysteryWord");
+    invisibleWord.text(hiddenWord);
 
     //set the number of guesses
     guesses = mysteryWord.length + 2;
     updateGuesses();
 
     //clears guessed letters
-    var usedLetters = document.getElementById("usedLetters");
-    usedLetters.textContent = "";
+    $("#usedLetters").text("");
     
-    //resets mysteryWord back to black
-    document.getElementById("mysteryWord").style = "color: black";
+    //resets mysteryWord color
+    $("#mysteryWord").css("color", "black");
+
+    //set game flag to start game
+    gameOver = false;
     
 }
 
 //updates the remaining guesses
 function updateGuesses(){
-    var guessesID = document.getElementById("guesses");
-    guessesID.textContent =  guesses;
+    $("#guesses").text(guesses);
 }
 
 //masks the word as underscores
@@ -128,19 +131,22 @@ function checkWin(hiddenWord){
     var result = (hiddenWord.indexOf("_") >= 0) ? false : true;
     if (result === true){
         ++wins;    
-        document.getElementById("wins").textContent = wins;
+        $("#wins").text(wins);
         document.getElementById("mysteryWord").style = "color: white!important";
+        gameOver = true;
     }
     return result;
 }
 
+//checks to see if user lost
 function checkLose(g){
     var result = (g === 0)?true:false;
     if(result === true) {
         ++losses;
-        document.getElementById("losses").textContent = losses;
-        document.getElementById("mysteryWord").textContent = mysteryWord;
+        $("#losses").text(losses);
+        $("#mysteryWord").text(mysteryWord);
         document.getElementById("mysteryWord").style = "color: red!important";
+        gameOver = true;
     }
     return result;
 }
