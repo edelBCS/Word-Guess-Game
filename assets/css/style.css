@@ -1,14 +1,11 @@
 .bg-div {
     background-color: #090708;
     height: 100vh;
-}
-
-#bg-topper {
     z-index: -1;
 }
 
 #jumbo {
-    background-color: #090708;
+    background-color: rgba(9, 7, 8, 0.5);
     color: gray;
 }
 

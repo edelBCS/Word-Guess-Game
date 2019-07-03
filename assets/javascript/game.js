@@ -47,15 +47,14 @@ document.onkeyup = function(e){
             if (mysteryWord.indexOf(e.key) >= 0 && (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0)) {
                 hiddenWord = unhideLetter(hiddenWord, e.key);
                 usedLetters.textContent = usedLetters.textContent + e.key;
+                //displays new mystery word with correct guesses
+                invisibleWord.textContent = hiddenWord;
             } else if (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0){
                 usedLetters.textContent = usedLetters.textContent + e.key;
                 //decrement guesses if wrong
                 guesses = guesses - 1;            
                 updateGuesses();
             }
-
-            //displays new mystery word with correct guess
-            invisibleWord.textContent = hiddenWord;
             
             //check for win condition
             result = checkWin(hiddenWord);
@@ -129,8 +128,8 @@ function checkWin(hiddenWord){
     var result = (hiddenWord.indexOf("_") >= 0) ? false : true;
     if (result === true){
         ++wins;    
-        document.getElementById("wins").textContent = "WINS: " + wins;
-        document.getElementById("mysteryWord").style = "color: green";
+        document.getElementById("wins").textContent = wins;
+        document.getElementById("mysteryWord").style = "color: white!important";
     }
     return result;
 }
@@ -139,9 +138,9 @@ function checkLose(g){
     var result = (g === 0)?true:false;
     if(result === true) {
         ++losses;
-        document.getElementById("losses").textContent = "LOSSES: " + losses;
+        document.getElementById("losses").textContent = losses;
         document.getElementById("mysteryWord").textContent = mysteryWord;
-        document.getElementById("mysteryWord").style = "color: red";
+        document.getElementById("mysteryWord").style = "color: red!important";
     }
     return result;
 }

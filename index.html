@@ -15,55 +15,56 @@
 <body>
     <div class="bg-div container-fluid p-0 m-0 text-center fixed-top">
         <img id="bg-topper" src="assets/images/topper.jpg" class="fixed-top m-auto m-0 p-0 col-8 rounded-lg" alt="">
-        <div class="container text-center">
-            <!-- Title Banner -->
-            <div id="jumbo" class="jumbotron mt-5 pb-0">
+    </div>
+    <div class="container text-center">
+        <!-- Title Banner -->
+        <div id="jumbo" class="jumbotron mt-5 pb-0">
 
-                <h1 class="display-4 text-center">ZOMBIE Word Guess Game</h1>
-                <p class="lead text-center">Guess the word or you LOSE!!!</p>
-                <img id="deadHand" src="assets/images/hand.png" alt="zombie hand">
+            <h1 class="display-4 text-center">ZOMBIE Word Guess Game</h1>
+            <p class="lead text-center">Guess the word or you LOSE!!!</p>
+            <img id="deadHand" src="assets/images/hand.png" alt="zombie hand">
+        </div>
+        <div id="main-row" class="row justify-content-center">
+            <!-- Score Keeping  -->
+            <div class="col-2 text-center">
+                YOU HAVE ESCAPED
+                <div id="wins" class="wins">
+
+                </div>
+                TIMES
+                <br><br>
+                YOU HAVE BEEN EATEN
+                <div id="losses" class="losses">
+
+                </div>
+                TIMES
+                <br><br>
+                <!-- Remaining Guesses -->
+                REMAINING GUESSES<br>
+                <div id="guesses" class="guesses">
+                </div>
             </div>
-            <div id="main-row" class="row justify-content-center">
-                <!-- Score Keeping  -->
-                <div class="col-2 text-center">
-                    YOU HAVE ESCAPED
-                    <div id="wins" class="wins">
-                    
-                    </div>
-                    TIMES
-                    <br><br>
-                    YOU HAVE BEEN EATEN
-                    <div id="losses" class="losses">
-                        
-                    </div>
-                    TIMES
-                    <br><br>
-                    <!-- Remaining Guesses -->
-                    REMAINING GUESSES<br>
-                    <div id="guesses" class="guesses">
-                    </div>
+
+            <div class="col-6 text-center">
+                <!-- Word to be Guessed -->
+                <div id="mysteryWord" class="mysteryWord my-5">
+
                 </div>
 
-                <div class="col-6 text-center">
-                    <!-- Word to be Guessed -->
-                    <div id="mysteryWord" class="mysteryWord">
+                <!-- Letters Already Guessed -->
+                Letters Already Guessed:
+                <div id="usedLetters" class="usedLetters mb-5">
+                    <h2 class="h2"></h2>
+                </div>
 
-                    </div>
-
-                    <!-- Letters Already Guessed -->
-                    Letters Already Guessed:
-                    <div id="usedLetters" class="usedLetters">
-                        <h2 class="h2"></h2>
-                    </div>
-
-                    <!-- Start and new game -->
-                    <div id="newGameBtn" class="newGameBtn">
-                        <button class="btn btn-danger" onclick="setupNewGame()">New Game</button>
-                    </div>
+                <!-- Start and new game -->
+                <div id="newGameBtn" class="newGameBtn m-3">
+                    <button class="btn btn-danger" onclick="setupNewGame()">New Game</button>
                 </div>
             </div>
         </div>
     </div>
+
 
 
 
