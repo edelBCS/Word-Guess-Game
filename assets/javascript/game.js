@@ -34,8 +34,8 @@ var losses = 0;
 var gameOver = true;
 
 //Set WINS/LOSSES
-document.getElementById("wins").textContent = 0;
-document.getElementById("losses").textContent = 0;
+$("#wins").text(0);
+$("#losses").text(0);
 
 setupNewGame();
 
@@ -53,7 +53,7 @@ document.onkeyup = function(e){
                 hiddenWord = unhideLetter(hiddenWord, e.key);
                 usedLetters.textContent = usedLetters.textContent + e.key;
                 //displays new mystery word with correct guesses
-                invisibleWord.textContent = hiddenWord;
+                invisibleWord.text(hiddenWord);
             } else if (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0){
                 usedLetters.textContent = usedLetters.textContent + e.key;
                 //decrement guesses if wrong
