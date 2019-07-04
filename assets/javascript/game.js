@@ -57,7 +57,7 @@ var zombieWord = {
         //resets mysteryWord color
         $("#mysteryWord").css("color", "black");
 
-        //set game flag to start game
+        //restarts the game
         this.gameOver = false;
         
     },
@@ -104,7 +104,8 @@ var zombieWord = {
             $("#mysteryWord").text(this.mysteryWord);
             document.getElementById("mysteryWord").style = "color: red!important";
             this.gameOver = true;
-        }
+            $("#lossAudio").get(0).play();
+        }        
         return result;
     }
 }
