@@ -1,5 +1,3 @@
-//You haven't won yet
-
 var wins = 0;
 var losses = 0;
 
@@ -10,6 +8,8 @@ var zombieWord = {
     invisibleWord : "",
     hiddenWord : "",
     gameOver : true,
+
+    //list of possible mystery Words
     words : [
         "zombie",
         "walkers",
@@ -34,6 +34,7 @@ var zombieWord = {
         "resurrect",
         "dead"
     ],
+
     // Sets perameters for a New Game
     setupNewGame : function(){
         // Picks a mystery word from the array
@@ -48,7 +49,7 @@ var zombieWord = {
         this.invisibleWord.text(this.hiddenWord);
 
         //set the number of guesses
-        this.guesses = this.mysteryWord.length + 2;
+        this.guesses = this.mysteryWord.length + 1;
         this.updateGuesses();
 
         //clears guessed letters
