@@ -1,43 +1,119 @@
-const words = [
-    "zombie",
-    "walkers",
-    "brains",
-    "undead",
-    "unearth",
-    "graves",
-    "headshot",
-    "doubletap",
-    "cardio",
-    "limberup",
-    "cannibalize",
-    "corpse",
-    "apocalypse",
-    "reanimate",
-    "infection",
-    "rotting",
-    "flesh",
-    "virus",
-    "outbrake",
-    "bite",
-    "resurrect",
-    "dead"
-]
-
 //You haven't won yet
-var result = false;
-var guesses = 0;
-var mysteryWord;
-var invisibleWord;
-var hiddenWord;
+
 var wins = 0;
 var losses = 0;
-var gameOver = true;
+
+var zombieWord = {
+    result : false,
+    guesses : 0,
+    mysteryWord : "",
+    invisibleWord : "",
+    hiddenWord : "",
+    gameOver : true,
+    words : [
+        "zombie",
+        "walkers",
+        "brains",
+        "undead",
+        "unearth",
+        "graves",
+        "headshot",
+        "doubletap",
+        "cardio",
+        "limberup",
+        "cannibalize",
+        "corpse",
+        "apocalypse",
+        "reanimate",
+        "infection",
+        "rotting",
+        "flesh",
+        "virus",
+        "outbrake",
+        "bite",
+        "resurrect",
+        "dead"
+    ],
+    // Sets perameters for a New Game
+    setupNewGame : function(){
+        // Picks a mystery word from the array
+        this.mysteryWord = this.words[Math.floor(Math.random() * this.words.length)];
+        console.log(this.mysteryWord);
+
+        // Hides the work then displays it
+        this.hiddenWord = this.hideWord(this.mysteryWord);
+
+        //Displays the word as blanks spaces
+        this.invisibleWord = $("#mysteryWord");
+        this.invisibleWord.text(this.hiddenWord);
+
+        //set the number of guesses
+        this.guesses = this.mysteryWord.length + 2;
+        this.updateGuesses();
+
+        //clears guessed letters
+        $("#usedLetters").text("");
+        
+        //resets mysteryWord color
+        $("#mysteryWord").css("color", "black");
+
+        //set game flag to start game
+        this.gameOver = false;
+        
+    },
+
+    //updates the remaining guesses
+    updateGuesses : function(){
+        $("#guesses").text(this.guesses);
+    },
+
+    //masks the word as underscores
+    hideWord : function(word){
+        var tempHiddenWord = "";
+        for(var letters of word){tempHiddenWord = tempHiddenWord + "_"}
+        return tempHiddenWord;
+    },
+
+    //checks if letter is in word, reveals it if correct
+    unhideLetter : function(temphiddenWord, letter){    
+        for(var i = 0; i<this.mysteryWord.length; ++i){
+            var tempStr = (this.mysteryWord[i] === letter) ? temphiddenWord.substring(0, i) + letter + temphiddenWord.substring(i + 1) : temphiddenWord;
+            temphiddenWord = tempStr;
+        }        
+        return  tempStr;
+    },
+
+    //checks to see if user won
+    checkWin : function(temphiddenWord){
+        var result = (temphiddenWord.indexOf("_") >= 0) ? false : true;
+        if (result === true){
+            ++wins;    
+            $("#wins").text(wins);
+            document.getElementById("mysteryWord").style = "color: white!important";
+            this.gameOver = true;
+        }
+        return result;
+    },
+
+    //checks to see if user lost
+    checkLose : function(g){
+        var result = (g === 0)?true:false;
+        if(result === true) {
+            ++losses;
+            $("#losses").text(losses);
+            $("#mysteryWord").text(this.mysteryWord);
+            document.getElementById("mysteryWord").style = "color: red!important";
+            this.gameOver = true;
+        }
+        return result;
+    }
+}
 
 //Set WINS/LOSSES
 $("#wins").text(0);
 $("#losses").text(0);
 
-setupNewGame();
+zombieWord.setupNewGame();
 
 //when key is pressed
 document.onkeyup = function(e){
@@ -45,30 +121,30 @@ document.onkeyup = function(e){
     var usedLetters = document.getElementById("usedLetters");
     
     // Checks to see if game is still live
-    if (!gameOver) {
+    if (!zombieWord.gameOver) {
         // determins if keyup event was a letter
         if (e.which >= 65 && e.which <=90){
             //if correct guess display on screen then add letter to user letters
-            if (mysteryWord.indexOf(e.key) >= 0 && (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0)) {
-                hiddenWord = unhideLetter(hiddenWord, e.key);
+            if (zombieWord.mysteryWord.indexOf(e.key) >= 0 && (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0)) {
+                zombieWord.hiddenWord = zombieWord.unhideLetter(zombieWord.hiddenWord, e.key);
                 usedLetters.textContent = usedLetters.textContent + e.key;
                 //displays new mystery word with correct guesses
-                invisibleWord.text(hiddenWord);
+                zombieWord.invisibleWord.text(zombieWord.hiddenWord);
             } else if (usedLetters.textContent.indexOf(e.key.toLowerCase()) < 0){
                 usedLetters.textContent = usedLetters.textContent + e.key;
                 //decrement guesses if wrong
-                guesses = guesses - 1;            
-                updateGuesses();
+                zombieWord.guesses = zombieWord.guesses - 1;            
+                zombieWord.updateGuesses();
             }
             
             //check for win condition
-            result = checkWin(hiddenWord);
+            zombieWord.result = zombieWord.checkWin(zombieWord.hiddenWord);
             //Timeout is set to prevent alert from firing before page is repainted
-            (result === true)?(setTimeout(function(){alert("YOU WIN!");},10)) : "";
+            (zombieWord.result === true)?(setTimeout(function(){alert("YOU WIN!");},10)) : "";
 
             //check for lose condition
-            result = checkLose(guesses);
-            (result === true)?(setTimeout(function(){alert("YOU LOSE!");},10)) : "";
+            zombieWord.result = zombieWord.checkLose(zombieWord.guesses);
+            (zombieWord.result === true)?(setTimeout(function(){alert("YOU LOSE!");},10)) : "";
 
         } else {
             alert("Please Choose a Letter");
@@ -76,77 +152,8 @@ document.onkeyup = function(e){
     }
 }
 
-// Sets perameters for a New Game
-function setupNewGame(){
-    // Picks a mystery word from the array
-    mysteryWord = words[Math.floor(Math.random() * words.length)];
-    console.log(mysteryWord);
 
-    // Hides the work then displays it
-    hiddenWord = hideWord(mysteryWord);
 
-    //Displays the word as blanks spaces
-    invisibleWord = $("#mysteryWord");
-    invisibleWord.text(hiddenWord);
 
-    //set the number of guesses
-    guesses = mysteryWord.length + 2;
-    updateGuesses();
 
-    //clears guessed letters
-    $("#usedLetters").text("");
-    
-    //resets mysteryWord color
-    $("#mysteryWord").css("color", "black");
 
-    //set game flag to start game
-    gameOver = false;
-    
-}
-
-//updates the remaining guesses
-function updateGuesses(){
-    $("#guesses").text(guesses);
-}
-
-//masks the word as underscores
-function hideWord(word){
-    var hiddenWord = "";
-    for(var letters of word){hiddenWord = hiddenWord + "_"}
-    return hiddenWord;
-}
-
-//checks if letter is in word, reveals it if correct
-function unhideLetter(hiddenWord, letter){    
-    for(var i = 0; i<mysteryWord.length; ++i){
-        var tempStr = (mysteryWord[i] === letter) ? hiddenWord.substring(0, i) + letter + hiddenWord.substring(i + 1) : hiddenWord;
-        hiddenWord = tempStr;
-    }
-    
-    return  hiddenWord;
-}
-
-//checks to see if user won
-function checkWin(hiddenWord){
-    var result = (hiddenWord.indexOf("_") >= 0) ? false : true;
-    if (result === true){
-        ++wins;    
-        $("#wins").text(wins);
-        document.getElementById("mysteryWord").style = "color: white!important";
-        gameOver = true;
-    }
-    return result;
-}
-
-//checks to see if user lost
-function checkLose(g){
-    var result = (g === 0)?true:false;
-    if(result === true) {
-        ++losses;
-        $("#losses").text(losses);
-        $("#mysteryWord").text(mysteryWord);
-        document.getElementById("mysteryWord").style = "color: red!important";
-        gameOver = true;
-    }
-    return result;
-}
