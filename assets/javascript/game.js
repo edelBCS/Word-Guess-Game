@@ -16,7 +16,7 @@ var zombieWord = {
         "brains",
         "undead",
         "unearth",
-        "graves",
+        "grave",
         "headshot",
         "doubletap",
         "cardio",
@@ -29,10 +29,12 @@ var zombieWord = {
         "rotting",
         "flesh",
         "virus",
-        "outbrake",
+        "outbreak",
         "bite",
         "resurrect",
-        "dead"
+        "dead",
+        "cemetery",
+        "death"
     ],
 
     // Sets perameters for a New Game
